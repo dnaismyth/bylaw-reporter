@@ -543,7 +543,7 @@
                 <configuration>
                     <changeLogFile>src/main/resources/config/liquibase/master.xml</changeLogFile>
                     <diffChangeLogFile>src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
-                    <driver>com.mysql.jdbc.Driver</driver>
+                	<driver>org.postgresql.Driver</driver>
                     <url>jdbc:postgresql://localhost:5432/bylawreport</url>
                     <defaultSchemaName>public</defaultSchemaName>
                     <username>postgres</username>
