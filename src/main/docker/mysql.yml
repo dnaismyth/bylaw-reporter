@@ -1,0 +1,14 @@
+version: '2'
+services:
+    bylaw_report-mysql:
+        container_name: bylaw_report-mysql
+        image: mysql:5.7.12
+        # volumes:
+        #     - ~/volumes/jhipster/bylaw_report/mysql/:/var/lib/mysql/
+        environment:
+            - MYSQL_USER=root
+            - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+            - MYSQL_DATABASE=bylaw_report
+        ports:
+            - 3306:3306
+        command: mysqld --lower_case_table_names=1 --skip-ssl

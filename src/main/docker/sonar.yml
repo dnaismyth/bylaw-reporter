@@ -1,0 +1,8 @@
+version: '2'
+services:
+    bylaw_report-sonar:
+        container_name: bylaw_report-sonar
+        image: sonarqube:5.5-alpine
+        ports:
+            - 9000:9000
+            - 9092:9092
