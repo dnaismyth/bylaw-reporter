@@ -2,7 +2,7 @@ package flow.web.rest;
 
 import flow.BylawReportApp;
 import flow.domain.Authority;
-import flow.domain.User;
+import flow.domain.RUser;
 import flow.repository.AuthorityRepository;
 import flow.repository.UserRepository;
 import flow.security.AuthoritiesConstants;
@@ -70,7 +70,7 @@ public class AccountResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        doNothing().when(mockMailService).sendActivationEmail((User) anyObject(), anyString());
+        doNothing().when(mockMailService).sendActivationEmail((RUser) anyObject(), anyString());
 
         AccountResource accountResource = new AccountResource();
         ReflectionTestUtils.setField(accountResource, "userRepository", userRepository);
@@ -113,7 +113,7 @@ public class AccountResourceIntTest {
         authority.setName(AuthoritiesConstants.ADMIN);
         authorities.add(authority);
 
-        User user = new User();
+        RUser user = new RUser();
         user.setLogin("test");
         user.setFirstName("john");
         user.setLastName("doe");
@@ -165,7 +165,7 @@ public class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(validUser)))
             .andExpect(status().isCreated());
 
-        Optional<User> user = userRepository.findOneByLogin("joe");
+        Optional<RUser> user = userRepository.findOneByLogin("joe");
         assertThat(user.isPresent()).isTrue();
     }
 
@@ -193,7 +193,7 @@ public class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(invalidUser)))
             .andExpect(status().isBadRequest());
 
-        Optional<User> user = userRepository.findOneByEmail("funky@example.com");
+        Optional<RUser> user = userRepository.findOneByEmail("funky@example.com");
         assertThat(user.isPresent()).isFalse();
     }
 
@@ -221,7 +221,7 @@ public class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(invalidUser)))
             .andExpect(status().isBadRequest());
 
-        Optional<User> user = userRepository.findOneByLogin("bob");
+        Optional<RUser> user = userRepository.findOneByLogin("bob");
         assertThat(user.isPresent()).isFalse();
     }
 
@@ -249,7 +249,7 @@ public class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(invalidUser)))
             .andExpect(status().isBadRequest());
 
-        Optional<User> user = userRepository.findOneByLogin("bob");
+        Optional<RUser> user = userRepository.findOneByLogin("bob");
         assertThat(user.isPresent()).isFalse();
     }
 
@@ -290,7 +290,7 @@ public class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(duplicatedUser)))
             .andExpect(status().is4xxClientError());
 
-        Optional<User> userDup = userRepository.findOneByEmail("alicejr@example.com");
+        Optional<RUser> userDup = userRepository.findOneByEmail("alicejr@example.com");
         assertThat(userDup.isPresent()).isFalse();
     }
 
@@ -331,7 +331,7 @@ public class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(duplicatedUser)))
             .andExpect(status().is4xxClientError());
 
-        Optional<User> userDup = userRepository.findOneByLogin("johnjr");
+        Optional<RUser> userDup = userRepository.findOneByLogin("johnjr");
         assertThat(userDup.isPresent()).isFalse();
     }
 
@@ -359,7 +359,7 @@ public class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(validUser)))
             .andExpect(status().isCreated());
 
-        Optional<User> userDup = userRepository.findOneByLogin("badguy");
+        Optional<RUser> userDup = userRepository.findOneByLogin("badguy");
         assertThat(userDup.isPresent()).isTrue();
         assertThat(userDup.get().getAuthorities()).hasSize(1)
             .containsExactly(authorityRepository.findOne(AuthoritiesConstants.USER));
@@ -384,7 +384,7 @@ public class AccountResourceIntTest {
                 .content(TestUtil.convertObjectToJsonBytes(invalidUser)))
             .andExpect(status().isBadRequest());
 
-        Optional<User> user = userRepository.findOneByEmail("funky@example.com");
+        Optional<RUser> user = userRepository.findOneByEmail("funky@example.com");
         assertThat(user.isPresent()).isFalse();
     }
 }

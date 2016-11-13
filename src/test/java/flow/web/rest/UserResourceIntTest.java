@@ -1,7 +1,7 @@
 package flow.web.rest;
 
 import flow.BylawReportApp;
-import flow.domain.User;
+import flow.domain.RUser;
 import flow.repository.UserRepository;
 import flow.service.UserService;
 import org.junit.Before;

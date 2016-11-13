@@ -20,7 +20,7 @@ import java.time.ZonedDateTime;
  */
 @Entity
 @Table(name = "reporter")
-public class User extends AbstractAuditingEntity implements Serializable {
+public class RUser extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -187,7 +187,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
             return false;
         }
 
-        User user = (User) o;
+        RUser user = (RUser) o;
 
         if (!login.equals(user.login)) {
             return false;

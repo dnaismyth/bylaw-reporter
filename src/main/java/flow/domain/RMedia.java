@@ -4,7 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -35,16 +34,10 @@ public class RMedia extends AbstractAuditingEntity {
 	private String fileName;
 	
 	/**
-	 * Report that the media is associated with
-	 */
-	@OneToOne
-	private RBylawReport bylawReport;
-	
-	/**
 	 * Id of the user that is making the report
 	 */
-	@Column(name = "reporter_id")
-	private Long reporterId;
+	@Column(name = "reporter")
+	private RUser reporter;
 
 	public String getFileName() {
 		return fileName;
@@ -54,20 +47,12 @@ public class RMedia extends AbstractAuditingEntity {
 		this.fileName = fileName;
 	}
 
-	public RBylawReport getBylawReport() {
-		return bylawReport;
+	public RUser getReporter() {
+		return reporter;
 	}
 
-	public void setBylawReport(RBylawReport bylawReport) {
-		this.bylawReport = bylawReport;
-	}
-
-	public Long getReporterId() {
-		return reporterId;
-	}
-
-	public void setReporterId(Long reporterId) {
-		this.reporterId = reporterId;
+	public void setReporter(RUser reporter) {
+		this.reporter = reporter;
 	}
 	
 	public Long getId(){

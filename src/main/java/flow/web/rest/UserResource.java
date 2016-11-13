@@ -3,7 +3,7 @@ package flow.web.rest;
 import flow.config.Constants;
 import com.codahale.metrics.annotation.Timed;
 import flow.domain.Authority;
-import flow.domain.User;
+import flow.domain.RUser;
 import flow.repository.AuthorityRepository;
 import flow.repository.UserRepository;
 import flow.security.AuthoritiesConstants;
@@ -105,7 +105,7 @@ public class UserResource {
                 .headers(HeaderUtil.createFailureAlert("userManagement", "emailexists", "Email already in use"))
                 .body(null);
         } else {
-            User newUser = userService.createUser(managedUserDTO);
+            RUser newUser = userService.createUser(managedUserDTO);
             String baseUrl = request.getScheme() + // "http"
             "://" +                                // "://"
             request.getServerName() +              // "myhost"
@@ -135,7 +135,7 @@ public class UserResource {
     @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<ManagedUserDTO> updateUser(@RequestBody ManagedUserDTO managedUserDTO) {
         log.debug("REST request to update User : {}", managedUserDTO);
-        Optional<User> existingUser = userRepository.findOneByEmail(managedUserDTO.getEmail());
+        Optional<RUser> existingUser = userRepository.findOneByEmail(managedUserDTO.getEmail());
         if (existingUser.isPresent() && (!existingUser.get().getId().equals(managedUserDTO.getId()))) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("userManagement", "emailexists", "E-mail already in use")).body(null);
         }
@@ -180,7 +180,7 @@ public class UserResource {
     @Transactional(readOnly = true)
     public ResponseEntity<List<ManagedUserDTO>> getAllUsers(Pageable pageable)
         throws URISyntaxException {
-        Page<User> page = userRepository.findAll(pageable);
+        Page<RUser> page = userRepository.findAll(pageable);
         List<ManagedUserDTO> managedUserDTOs = page.getContent().stream()
             .map(ManagedUserDTO::new)
             .collect(Collectors.toList());

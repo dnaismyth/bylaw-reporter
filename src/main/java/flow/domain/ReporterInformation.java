@@ -9,7 +9,7 @@ import javax.persistence.Embeddable;
  *
  */
 @Embeddable
-public class RReporterInformation {
+public class ReporterInformation {
 
 	@Column(name = "reporter_name")
 	private String name;
@@ -23,19 +23,19 @@ public class RReporterInformation {
 	@Column(name = "emailaddress")
 	private String emailAddress;
 	
-	public String getReporterName() {
+	public String getName() {
 		return name;
 	}
 
-	public void setReporterName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
-	public String getReporterAddress() {
+	public String getAddress() {
 		return address;
 	}
 
-	public void setReporterAddress(String address) {
+	public void setAddress(String address) {
 		this.address = address;
 	}
 

@@ -10,8 +10,8 @@ import java.time.ZonedDateTime;
 public class Media {
 
 	private Long id;
+	private UserItem owner;
 	private String fileName;
-	private BylawReport bylawReport;
 	private ZonedDateTime createdDate;
 	
 	public Media () {}
@@ -23,21 +23,13 @@ public class Media {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public String getFileName() {
-		return fileName;
+	
+	public UserItem getOwner(){
+		return owner;
 	}
-
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-
-	public BylawReport getBylawReport() {
-		return bylawReport;
-	}
-
-	public void setBylawReport(BylawReport bylawReport) {
-		this.bylawReport = bylawReport;
+	
+	public void setOwner(UserItem owner){
+		this.owner = owner;
 	}
 
 	public ZonedDateTime getCreatedDate() {
@@ -46,6 +38,14 @@ public class Media {
 
 	public void setCreatedDate(ZonedDateTime createdDate) {
 		this.createdDate = createdDate;
+	}
+	
+	public String getFileName(){
+		return fileName;
+	}
+	
+	public void setFileName(String fileName){
+		this.fileName = fileName;
 	}
 	
 }

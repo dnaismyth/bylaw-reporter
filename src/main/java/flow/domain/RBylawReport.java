@@ -1,6 +1,8 @@
 package flow.domain;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -9,8 +11,11 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.JoinColumn;
 
 import flow.dto.ViolationType;
 
@@ -52,16 +57,17 @@ public class RBylawReport extends AbstractAuditingEntity {
 	private ViolationType reportType;
 	
 	/**
-	 * Optional image attachment
+	 * Optional image attachments
 	 */
-	@OneToOne
-	private RMedia media;
+	@OneToMany
+	@JoinTable(name = "report_media")
+	private Collection<RMedia> reportMedia = new ArrayList<RMedia>();
 	
 	/**
 	 * Basic user information of the REPORTER
 	 */
 	@Embedded
-	private RReporterInformation reporterInformation;
+	private ReporterInformation reporterInformation;
 
 	public ZonedDateTime getIncidentDate() {
 		return incidentDate;
@@ -87,20 +93,20 @@ public class RBylawReport extends AbstractAuditingEntity {
 		this.reportType = reportType;
 	}
 
-	public RReporterInformation getUserInformation() {
+	public ReporterInformation getReporterInformation() {
 		return reporterInformation;
 	}
 
-	public void setReporterInformation(RReporterInformation reporterInformation) {
+	public void setReporterInformation(ReporterInformation reporterInformation) {
 		this.reporterInformation = reporterInformation;
 	}
 	
-	public RMedia getMedia() {
-		return media;
+	public Collection<RMedia> getMedia() {
+		return reportMedia;
 	}
 
-	public void setMedia(RMedia media) {
-		this.media = media;
+	public void setMedia(Collection<RMedia> reportMedia) {
+		this.reportMedia = reportMedia;
 	}
 	
 	public Long getId(){

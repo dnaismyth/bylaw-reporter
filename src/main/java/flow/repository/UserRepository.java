@@ -1,6 +1,6 @@
 package flow.repository;
 
-import flow.domain.User;
+import flow.domain.RUser;
 
 import java.time.ZonedDateTime;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,21 +11,21 @@ import java.util.Optional;
 /**
  * Spring Data JPA repository for the User entity.
  */
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<RUser, Long> {
 
-    Optional<User> findOneByActivationKey(String activationKey);
+    Optional<RUser> findOneByActivationKey(String activationKey);
 
-    List<User> findAllByActivatedIsFalseAndCreatedDateBefore(ZonedDateTime dateTime);
+    List<RUser> findAllByActivatedIsFalseAndCreatedDateBefore(ZonedDateTime dateTime);
 
-    Optional<User> findOneByResetKey(String resetKey);
+    Optional<RUser> findOneByResetKey(String resetKey);
 
-    Optional<User> findOneByEmail(String email);
+    Optional<RUser> findOneByEmail(String email);
 
-    Optional<User> findOneByLogin(String login);
+    Optional<RUser> findOneByLogin(String login);
 
-    Optional<User> findOneById(Long userId);
+    Optional<RUser> findOneById(Long userId);
 
     @Override
-    void delete(User t);
+    void delete(RUser t);
 
 }

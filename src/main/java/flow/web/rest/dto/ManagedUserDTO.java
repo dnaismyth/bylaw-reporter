@@ -4,7 +4,7 @@ import java.time.ZonedDateTime;
 
 import java.util.Set;
 
-import flow.domain.User;
+import flow.domain.RUser;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -31,7 +31,7 @@ public class ManagedUserDTO extends UserDTO {
     public ManagedUserDTO() {
     }
 
-    public ManagedUserDTO(User user) {
+    public ManagedUserDTO(RUser user) {
         super(user);
         this.id = user.getId();
         this.createdDate = user.getCreatedDate();

@@ -3,7 +3,7 @@ package flow.web.rest.dto;
 import flow.config.Constants;
 
 import flow.domain.Authority;
-import flow.domain.User;
+import flow.domain.RUser;
 
 import org.hibernate.validator.constraints.Email;
 
@@ -40,7 +40,7 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(User user) {
+    public UserDTO(RUser user) {
         this(user.getLogin(), user.getFirstName(), user.getLastName(),
             user.getEmail(), user.getActivated(), user.getLangKey(),
             user.getAuthorities().stream().map(Authority::getName)

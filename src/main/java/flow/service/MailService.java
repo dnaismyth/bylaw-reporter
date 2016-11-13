@@ -1,7 +1,7 @@
 package flow.service;
 
 import flow.config.JHipsterProperties;
-import flow.domain.User;
+import flow.domain.RUser;
 
 import org.apache.commons.lang.CharEncoding;
 import org.slf4j.Logger;
@@ -66,7 +66,7 @@ public class MailService {
     }
 
     @Async
-    public void sendActivationEmail(User user, String baseUrl) {
+    public void sendActivationEmail(RUser user, String baseUrl) {
         log.debug("Sending activation e-mail to '{}'", user.getEmail());
         Locale locale = Locale.forLanguageTag(user.getLangKey());
         Context context = new Context(locale);
@@ -78,7 +78,7 @@ public class MailService {
     }
 
     @Async
-    public void sendCreationEmail(User user, String baseUrl) {
+    public void sendCreationEmail(RUser user, String baseUrl) {
         log.debug("Sending creation e-mail to '{}'", user.getEmail());
         Locale locale = Locale.forLanguageTag(user.getLangKey());
         Context context = new Context(locale);
@@ -90,7 +90,7 @@ public class MailService {
     }
 
     @Async
-    public void sendPasswordResetMail(User user, String baseUrl) {
+    public void sendPasswordResetMail(RUser user, String baseUrl) {
         log.debug("Sending password reset e-mail to '{}'", user.getEmail());
         Locale locale = Locale.forLanguageTag(user.getLangKey());
         Context context = new Context(locale);

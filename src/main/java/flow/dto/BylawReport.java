@@ -1,6 +1,8 @@
 package flow.dto;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class BylawReport {
 	
@@ -22,7 +24,7 @@ public class BylawReport {
 	private ViolationType reportType;
 	
 	
-	private String mediaFilename;
+	private Collection<Media> reportMedia = new ArrayList<Media>();
 
 
 	public Long getId() {
@@ -115,13 +117,13 @@ public class BylawReport {
 	}
 
 
-	public String getMediaFilename() {
-		return mediaFilename;
+	public Collection<Media> getReportMedia() {
+		return reportMedia;
 	}
 
 
-	public void setMediaFilename(String mediaFilename) {
-		this.mediaFilename = mediaFilename;
+	public void setReportMedia(Collection<Media> reportMedia){
+		this.reportMedia = reportMedia;
 	}
 
 	

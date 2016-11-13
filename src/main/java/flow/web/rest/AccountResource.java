@@ -2,7 +2,7 @@ package flow.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 
-import flow.domain.User;
+import flow.domain.RUser;
 import flow.repository.UserRepository;
 import flow.security.SecurityUtils;
 import flow.service.MailService;
@@ -67,7 +67,7 @@ public class AccountResource {
             .orElseGet(() -> userRepository.findOneByEmail(managedUserDTO.getEmail())
                 .map(user -> new ResponseEntity<>("e-mail address already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
                 .orElseGet(() -> {
-                    User user = userService.createUserInformation(managedUserDTO.getLogin(), managedUserDTO.getPassword(),
+                    RUser user = userService.createUserInformation(managedUserDTO.getLogin(), managedUserDTO.getPassword(),
                     managedUserDTO.getFirstName(), managedUserDTO.getLastName(), managedUserDTO.getEmail().toLowerCase(),
                     managedUserDTO.getLangKey());
                     String baseUrl = request.getScheme() + // "http"
@@ -140,7 +140,7 @@ public class AccountResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<String> saveAccount(@Valid @RequestBody UserDTO userDTO) {
-        Optional<User> existingUser = userRepository.findOneByEmail(userDTO.getEmail());
+        Optional<RUser> existingUser = userRepository.findOneByEmail(userDTO.getEmail());
         if (existingUser.isPresent() && (!existingUser.get().getLogin().equalsIgnoreCase(userDTO.getLogin()))) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("user-management", "emailexists", "Email already in use")).body(null);
         }
