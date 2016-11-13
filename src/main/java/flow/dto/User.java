@@ -19,6 +19,7 @@ public class User extends UserItem {
 	private String firstName;
 	private String lastName;
 	private ZonedDateTime createdDate;
+	private RoleType role;
 	
 	public String getEmail() {
 		return email;
@@ -49,6 +50,12 @@ public class User extends UserItem {
 	}
 	public void setCreatedDate(ZonedDateTime createdDate) {
 		this.createdDate = createdDate;
+	}
+	public RoleType getRole(){
+		return role;
+	}
+	public void setRole(RoleType role){
+		this.role = role;
 	}
 	
 }

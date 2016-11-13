@@ -1,14 +1,17 @@
 package flow.domain;
 
 import flow.config.Constants;
+import flow.dto.RoleType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Locale;
@@ -29,7 +32,6 @@ public class RUser extends AbstractAuditingEntity implements Serializable {
     private Long id;
 
     @NotNull
-    @Pattern(regexp = Constants.LOGIN_REGEX)
     @Size(min = 1, max = 50)
     @Column(length = 50, unique = true, nullable = false)
     private String login;
@@ -72,6 +74,14 @@ public class RUser extends AbstractAuditingEntity implements Serializable {
 
     @Column(name = "reset_date", nullable = true)
     private ZonedDateTime resetDate = null;
+    
+    /**
+     * The role of the User (Admin, User, Guest)
+     * @return
+     */
+    @Enumerated(EnumType.STRING)
+	@Column(name="role")
+    private RoleType role;
 
     @JsonIgnore
     @ManyToMany
@@ -168,6 +178,12 @@ public class RUser extends AbstractAuditingEntity implements Serializable {
 
     public void setLangKey(String langKey) {
         this.langKey = langKey;
+    }
+    public RoleType getRole(){
+    	return role;
+    }
+    public void setRole(RoleType role){
+    	this.role = role;
     }
 
     public Set<Authority> getAuthorities() {
