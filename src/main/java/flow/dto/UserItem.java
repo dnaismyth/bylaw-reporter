@@ -1,15 +1,21 @@
 package flow.dto;
 
+import java.io.Serializable;
+
 /**
  * Base user information item
  * @author DN
  *
  */
-public class UserItem {
+public class UserItem implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7084541471524486940L;
 	private Long id;
 	private String name;
-	private String emailAddress;
+	private String login;
 	
 	
 	public Long getId(){
@@ -28,11 +34,11 @@ public class UserItem {
 		this.name = name;
 	}
 	
-	public String getEmailAddress(){
-		return emailAddress;
+	public String getLogin(){
+		return login;
 	}
 	
-	public void setEmailAddress(String emailAddress){
-		this.emailAddress = emailAddress;
+	public void setLogin(String login){
+		this.login = login;
 	}
 }
