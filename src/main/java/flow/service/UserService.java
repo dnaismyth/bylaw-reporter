@@ -2,12 +2,15 @@ package flow.service;
 
 import flow.domain.Authority;
 import flow.domain.RUser;
+import flow.dto.User;
 import flow.repository.AuthorityRepository;
 import flow.repository.UserRepository;
 import flow.security.AuthoritiesConstants;
 import flow.security.SecurityUtils;
+import flow.service.mapper.UserMapper;
 import flow.service.util.RandomUtil;
 import flow.web.rest.dto.ManagedUserDTO;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -16,7 +19,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
+
 import javax.inject.Inject;
+
 import java.util.*;
 
 /**
@@ -25,9 +30,10 @@ import java.util.*;
 @Service
 @Transactional
 public class UserService {
-
+	
     private final Logger log = LoggerFactory.getLogger(UserService.class);
-
+    private UserMapper userMapper = new UserMapper();
+    
     @Inject
     private PasswordEncoder passwordEncoder;
 
@@ -179,6 +185,13 @@ public class UserService {
         RUser user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get();
         user.getAuthorities().size(); // eagerly load the association
         return user;
+    }
+    
+    @Transactional(readOnly = true)
+    public User getUserDTOWithAuthorities() {
+        RUser user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get();
+        user.getAuthorities().size(); // eagerly load the association
+        return userMapper.toUser(user);
     }
 
     /**

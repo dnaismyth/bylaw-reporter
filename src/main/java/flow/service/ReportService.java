@@ -8,6 +8,7 @@ import flow.dto.BylawReport;
 import flow.dto.RoleType;
 import flow.dto.User;
 import flow.exception.BadRequestException;
+import flow.exception.NoPermissionException;
 import flow.repository.BylawReportRepository;
 import flow.service.mapper.BylawReportMapper;
 import flow.service.util.RestPreconditions;
@@ -39,11 +40,11 @@ public class ReportService {
 	 * @return
 	 * @throws BadRequestException
 	 */
-	public BylawReport getBylawReport(Long id, User user) throws BadRequestException{
+	public BylawReport getBylawReport(Long id, User user) throws NoPermissionException{
 		RestPreconditions.checkNotNull(id);
 		RestPreconditions.checkNotNull(user);
 		if(user.getRole() != RoleType.ADMIN){
-			throw new BadRequestException("You must be an admin to view reports.");
+			throw new NoPermissionException("You must be an admin to view reports.");
 		}
 		
 		RBylawReport found = reportRepo.findOne(id);
