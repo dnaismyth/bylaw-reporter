@@ -110,12 +110,4 @@ public class UserServiceIntTest {
 
         userRepository.delete(user);
     }
-
-    @Test
-    public void testFindNotActivatedUsersByCreationDateBefore() {
-        userService.removeNotActivatedUsers();
-        ZonedDateTime now = ZonedDateTime.now();
-        List<RUser> users = userRepository.findAllByActivatedIsFalseAndCreatedDateBefore(now.minusDays(3));
-        assertThat(users).isEmpty();
-    }
 }

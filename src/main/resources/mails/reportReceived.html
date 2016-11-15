@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="#{email.received.title}">Report Received</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <p th:text="#{email.received.greeting(${user.login})}">
+            Dear
+        </p>
+        <p th:text="#{email.received.text1}">
+        </p>
+        <p>
+            <span th:text="#{email.received.text2}">Regards, </span>
+            <br/>
+            <em th:text="#{email.signature}"></em>
+        </p>
+    </body>
+</

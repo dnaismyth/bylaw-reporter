@@ -2,6 +2,7 @@ package flow.service;
 
 import flow.config.JHipsterProperties;
 import flow.domain.RUser;
+import flow.dto.User;
 
 import org.apache.commons.lang.CharEncoding;
 import org.slf4j.Logger;
@@ -14,9 +15,9 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 
-
 import javax.inject.Inject;
 import javax.mail.internet.MimeMessage;
+
 import java.util.Locale;
 
 /**
@@ -68,7 +69,7 @@ public class MailService {
     @Async
     public void sendActivationEmail(RUser user, String baseUrl) {
         log.debug("Sending activation e-mail to '{}'", user.getEmail());
-        Locale locale = Locale.forLanguageTag(user.getLangKey());
+        Locale locale = Locale.ENGLISH;
         Context context = new Context(locale);
         context.setVariable(USER, user);
         context.setVariable(BASE_URL, baseUrl);
@@ -76,11 +77,28 @@ public class MailService {
         String subject = messageSource.getMessage("email.activation.title", null, locale);
         sendEmail(user.getEmail(), subject, content, false, true);
     }
+    
+    /**
+     * Send Report received e-mail to users that have sent a report
+     * @param user
+     * @param baseUrl
+     */
+    @Async
+    public void sendReportReceivedEmail(User user, String baseUrl){
+    	log.debug("Sending report received email to '{}'", user.getEmail());
+        Locale locale = Locale.ENGLISH;
+    	Context context = new Context(locale);
+    	context.setVariable(USER, user);
+    	context.setVariable(BASE_URL, baseUrl);
+    	
+   
+    }
+    
 
     @Async
     public void sendCreationEmail(RUser user, String baseUrl) {
         log.debug("Sending creation e-mail to '{}'", user.getEmail());
-        Locale locale = Locale.forLanguageTag(user.getLangKey());
+        Locale locale = Locale.ENGLISH;
         Context context = new Context(locale);
         context.setVariable(USER, user);
         context.setVariable(BASE_URL, baseUrl);
@@ -92,7 +110,7 @@ public class MailService {
     @Async
     public void sendPasswordResetMail(RUser user, String baseUrl) {
         log.debug("Sending password reset e-mail to '{}'", user.getEmail());
-        Locale locale = Locale.forLanguageTag(user.getLangKey());
+        Locale locale = Locale.ENGLISH;
         Context context = new Context(locale);
         context.setVariable(USER, user);
         context.setVariable(BASE_URL, baseUrl);

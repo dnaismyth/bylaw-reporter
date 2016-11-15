@@ -9,6 +9,7 @@ import flow.security.AuthoritiesConstants;
 import flow.security.SecurityUtils;
 import flow.service.mapper.UserMapper;
 import flow.service.util.RandomUtil;
+import flow.service.util.RestPreconditions;
 import flow.web.rest.dto.ManagedUserDTO;
 
 import org.slf4j.Logger;
@@ -193,20 +194,16 @@ public class UserService {
         user.getAuthorities().size(); // eagerly load the association
         return userMapper.toUser(user);
     }
-
+    
     /**
-     * Not activated users should be automatically deleted after 3 days.
-     * <p>
-     * This is scheduled to get fired everyday, at 01:00 (am).
-     * </p>
+     * Find a user by their login
+     * @param login
+     * @return
      */
-    @Scheduled(cron = "0 0 1 * * ?")
-    public void removeNotActivatedUsers() {
-        ZonedDateTime now = ZonedDateTime.now();
-        List<RUser> users = userRepository.findAllByActivatedIsFalseAndCreatedDateBefore(now.minusDays(3));
-        for (RUser user : users) {
-            log.debug("Deleting not activated user {}", user.getLogin());
-            userRepository.delete(user);
-        }
+    public User findUserByLogin(String login){
+    	RestPreconditions.checkNotNull(login);
+    	RUser ru = userRepository.findUserByLogin(login);
+    	return userMapper.toUser(ru);
     }
+    
 }

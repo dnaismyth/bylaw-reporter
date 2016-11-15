@@ -24,6 +24,9 @@ public interface UserRepository extends JpaRepository<RUser, Long> {
     Optional<RUser> findOneByLogin(String login);
 
     Optional<RUser> findOneById(Long userId);
+    
+    @Query("SELECT u FROM RUser u WHERE LOWER(u.username) = LOWER(:username)")
+    public RUser findUserByLogin(String login);
 
     @Override
     void delete(RUser t);
