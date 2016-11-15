@@ -84,11 +84,11 @@ public class MailService {
      * @param baseUrl
      */
     @Async
-    public void sendReportReceivedEmail(User user, String baseUrl){
-    	log.debug("Sending report received email to '{}'", user.getEmail());
+    public void sendReportReceivedEmail(String emailAddress, String reporterName, String baseUrl){
+    	log.debug("Sending report received email to '{}'", emailAddress);
         Locale locale = Locale.ENGLISH;
     	Context context = new Context(locale);
-    	context.setVariable(USER, user);
+    	context.setVariable(USER, reporterName);
     	context.setVariable(BASE_URL, baseUrl);
     	
    

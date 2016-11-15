@@ -1,5 +1,7 @@
 package flow.web.rest;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +21,7 @@ import flow.web.rest.dto.RestResponse;
  *
  */
 @RestController
-@RequestMapping("/api/report")
+@RequestMapping("/api/reports")
 public class ReportController extends BaseController{
 
 	/**
@@ -29,23 +31,12 @@ public class ReportController extends BaseController{
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
-	public RestResponse<BylawReport> createBylawReport(@RequestBody BylawReport report){
-		
+	public RestResponse<BylawReport> createBylawReport(@RequestBody BylawReport report, HttpServletRequest request){
+		String baseUrl = getBaseUrl(request);
 		BylawReport created = reportService.createBylawReport(report);
+		String email = report.getReporterEmailAddress();
+		String name = report.getReporterName();
+		mailService.sendReportReceivedEmail(email, name, baseUrl);
 		return new RestResponse<BylawReport>(created);
-	}
-	
-	/**
-	 * Allow for an admin to find a report by id
-	 * @param id
-	 * @return
-	 * @throws NoPermissionException
-	 */
-	@RequestMapping(value ="/{id}", method = RequestMethod.GET)
-	@ResponseBody
-	public RestResponse<BylawReport> getBylawReport(@PathVariable("id") Long id) throws NoPermissionException {
-		User admin = getCurrentUser();
-		BylawReport report = reportService.getBylawReport(id, admin);
-		return new RestResponse<BylawReport>(report);
 	}
 }

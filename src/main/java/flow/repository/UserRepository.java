@@ -3,7 +3,9 @@ package flow.repository;
 import flow.domain.RUser;
 
 import java.time.ZonedDateTime;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +27,7 @@ public interface UserRepository extends JpaRepository<RUser, Long> {
 
     Optional<RUser> findOneById(Long userId);
     
-    @Query("SELECT u FROM RUser u WHERE LOWER(u.username) = LOWER(:username)")
+    @Query("SELECT u FROM RUser u WHERE LOWER(u.login) = LOWER(:login)")
     public RUser findUserByLogin(String login);
 
     @Override
