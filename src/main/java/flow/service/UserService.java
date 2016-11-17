@@ -2,6 +2,7 @@ package flow.service;
 
 import flow.domain.Authority;
 import flow.domain.RUser;
+import flow.dto.RoleType;
 import flow.dto.User;
 import flow.repository.AuthorityRepository;
 import flow.repository.UserRepository;
@@ -105,7 +106,7 @@ public class UserService {
         // new user gets registration key
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         authorities.add(authority);
-        newUser.setAuthorities(authorities);
+        newUser.setRole(RoleType.USER);
         userRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
         return newUser;
@@ -122,13 +123,7 @@ public class UserService {
         } else {
             user.setLangKey(managedUserDTO.getLangKey());
         }
-        if (managedUserDTO.getAuthorities() != null) {
-            Set<Authority> authorities = new HashSet<>();
-            managedUserDTO.getAuthorities().stream().forEach(
-                authority -> authorities.add(authorityRepository.findOne(authority))
-            );
-            user.setAuthorities(authorities);
-        }
+        user.setRole(RoleType.USER);
         String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
         user.setPassword(encryptedPassword);
         user.setResetKey(RandomUtil.generateResetKey());
@@ -169,7 +164,6 @@ public class UserService {
     @Transactional(readOnly = true)
     public Optional<RUser> getUserWithAuthoritiesByLogin(String login) {
         return userRepository.findOneByLogin(login).map(u -> {
-            u.getAuthorities().size();
             return u;
         });
     }
@@ -177,21 +171,18 @@ public class UserService {
     @Transactional(readOnly = true)
     public RUser getUserWithAuthorities(Long id) {
         RUser user = userRepository.findOne(id);
-        user.getAuthorities().size(); // eagerly load the association
         return user;
     }
 
     @Transactional(readOnly = true)
     public RUser getUserWithAuthorities() {
         RUser user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get();
-        user.getAuthorities().size(); // eagerly load the association
         return user;
     }
     
     @Transactional(readOnly = true)
     public User getUserDTOWithAuthorities() {
         RUser user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get();
-        user.getAuthorities().size(); // eagerly load the association
         return userMapper.toUser(user);
     }
     

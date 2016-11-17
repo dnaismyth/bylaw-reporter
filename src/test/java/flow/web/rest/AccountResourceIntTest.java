@@ -3,6 +3,7 @@ package flow.web.rest;
 import flow.BylawReportApp;
 import flow.domain.Authority;
 import flow.domain.RUser;
+import flow.dto.RoleType;
 import flow.repository.AuthorityRepository;
 import flow.repository.UserRepository;
 import flow.security.AuthoritiesConstants;
@@ -10,6 +11,7 @@ import flow.service.MailService;
 import flow.service.UserService;
 import flow.web.rest.dto.ManagedUserDTO;
 import flow.web.rest.dto.UserDTO;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +28,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -108,17 +111,13 @@ public class AccountResourceIntTest {
 
     @Test
     public void testGetExistingAccount() throws Exception {
-        Set<Authority> authorities = new HashSet<>();
-        Authority authority = new Authority();
-        authority.setName(AuthoritiesConstants.ADMIN);
-        authorities.add(authority);
 
         RUser user = new RUser();
         user.setLogin("test");
         user.setFirstName("john");
         user.setLastName("doe");
         user.setEmail("john.doe@jhipter.com");
-        user.setAuthorities(authorities);
+        user.setRole(RoleType.ADMIN);
         when(mockUserService.getUserWithAuthorities()).thenReturn(user);
 
         restUserMockMvc.perform(get("/api/account")
@@ -129,7 +128,7 @@ public class AccountResourceIntTest {
                 .andExpect(jsonPath("$.firstName").value("john"))
                 .andExpect(jsonPath("$.lastName").value("doe"))
                 .andExpect(jsonPath("$.email").value("john.doe@jhipter.com"))
-                .andExpect(jsonPath("$.authorities").value(AuthoritiesConstants.ADMIN));
+                .andExpect(jsonPath("$.role").value("ADMIN"));
     }
 
     @Test
@@ -153,7 +152,7 @@ public class AccountResourceIntTest {
             "joe@example.com",      // e-mail
             true,                   // activated
             "en",                   // langKey
-            new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)),
+            RoleType.USER,			// role
             null,                   // createdDate
             null,                   // lastModifiedBy
             null                    // lastModifiedDate
@@ -181,7 +180,7 @@ public class AccountResourceIntTest {
             "funky@example.com",    // e-mail
             true,                   // activated
             "en",                   // langKey
-            new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)),
+            RoleType.ADMIN,			// role
             null,                   // createdDate
             null,                   // lastModifiedBy
             null                    // lastModifiedDate
@@ -209,7 +208,7 @@ public class AccountResourceIntTest {
             "invalid",          // e-mail <-- invalid
             true,               // activated
             "en",               // langKey
-            new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)),
+            RoleType.USER,		// role
             null,               // createdDate
             null,               // lastModifiedBy
             null                // lastModifiedDate
@@ -237,7 +236,7 @@ public class AccountResourceIntTest {
             "bob@example.com",  // e-mail
             true,               // activated
             "en",               // langKey
-            new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)),
+            RoleType.USER,		// role
             null,               // createdDate
             null,               // lastModifiedBy
             null                // lastModifiedDate
@@ -266,7 +265,7 @@ public class AccountResourceIntTest {
             "alice@example.com",    // e-mail
             true,                   // activated
             "en",                   // langKey
-            new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)),
+            RoleType.USER,			// role
             null,                   // createdDate
             null,                   // lastModifiedBy
             null                    // lastModifiedDate
@@ -274,7 +273,7 @@ public class AccountResourceIntTest {
 
         // Duplicate login, different e-mail
         ManagedUserDTO duplicatedUser = new ManagedUserDTO(validUser.getId(), validUser.getLogin(), validUser.getPassword(), validUser.getLogin(), validUser.getLastName(),
-            "alicejr@example.com", true, validUser.getLangKey(), validUser.getAuthorities(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate());
+            "alicejr@example.com", true, validUser.getLangKey(), validUser.getRole(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate());
 
         // Good user
         restMvc.perform(
@@ -307,7 +306,7 @@ public class AccountResourceIntTest {
             "john@example.com",     // e-mail
             true,                   // activated
             "en",                   // langKey
-            new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)),
+            RoleType.USER,			// role
             null,                   // createdDate
             null,                   // lastModifiedBy
             null                    // lastModifiedDate
@@ -315,7 +314,7 @@ public class AccountResourceIntTest {
 
         // Duplicate e-mail, different login
         ManagedUserDTO duplicatedUser = new ManagedUserDTO(validUser.getId(), "johnjr", validUser.getPassword(), validUser.getLogin(), validUser.getLastName(),
-            validUser.getEmail(), true, validUser.getLangKey(), validUser.getAuthorities(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate());
+            validUser.getEmail(), true, validUser.getLangKey(), validUser.getRole(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate());
 
         // Good user
         restMvc.perform(
@@ -347,7 +346,7 @@ public class AccountResourceIntTest {
             "badguy@example.com",   // e-mail
             true,                   // activated
             "en",                   // langKey
-            new HashSet<>(Arrays.asList(AuthoritiesConstants.ADMIN)),
+            RoleType.ADMIN,			// role
             null,                   // createdDate
             null,                   // lastModifiedBy
             null                    // lastModifiedDate
@@ -361,8 +360,7 @@ public class AccountResourceIntTest {
 
         Optional<RUser> userDup = userRepository.findOneByLogin("badguy");
         assertThat(userDup.isPresent()).isTrue();
-        assertThat(userDup.get().getAuthorities()).hasSize(1)
-            .containsExactly(authorityRepository.findOne(AuthoritiesConstants.USER));
+        assertThat(userDup.get().getRole().equals(RoleType.ADMIN));
     }
 
     @Test
@@ -375,7 +373,7 @@ public class AccountResourceIntTest {
             "funky@example.com",    // e-mail
             true,                   // activated
             "en",                   // langKey
-            new HashSet<>(Arrays.asList(AuthoritiesConstants.USER))
+            RoleType.USER			// role
         );
 
         restUserMockMvc.perform(

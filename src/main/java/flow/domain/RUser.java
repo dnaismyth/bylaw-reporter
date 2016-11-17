@@ -83,14 +83,6 @@ public class RUser extends AbstractAuditingEntity implements Serializable {
 	@Column(name="role")
     private RoleType role;
 
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(
-        name = "jhi_user_authority",
-        joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-        inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
-    private Set<Authority> authorities = new HashSet<>();
-
     public Long getId() {
         return id;
     }
@@ -184,14 +176,6 @@ public class RUser extends AbstractAuditingEntity implements Serializable {
     }
     public void setRole(RoleType role){
     	this.role = role;
-    }
-
-    public Set<Authority> getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(Set<Authority> authorities) {
-        this.authorities = authorities;
     }
 
     @Override

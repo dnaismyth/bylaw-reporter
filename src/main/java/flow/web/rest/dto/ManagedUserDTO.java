@@ -1,10 +1,11 @@
 package flow.web.rest.dto;
 
 import java.time.ZonedDateTime;
-
 import java.util.Set;
 
 import flow.domain.RUser;
+import flow.dto.RoleType;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -41,8 +42,8 @@ public class ManagedUserDTO extends UserDTO {
     }
 
     public ManagedUserDTO(Long id, String login, String password, String firstName, String lastName,
-                          String email, boolean activated, String langKey, Set<String> authorities , ZonedDateTime createdDate, String lastModifiedBy, ZonedDateTime lastModifiedDate ) {
-        super(login, firstName, lastName, email, activated, langKey, authorities);
+                          String email, boolean activated, String langKey, RoleType role , ZonedDateTime createdDate, String lastModifiedBy, ZonedDateTime lastModifiedDate ) {
+        super(login, firstName, lastName, email, activated, langKey, role);
         this.id = id;
         this.createdDate = createdDate;
         this.lastModifiedBy = lastModifiedBy;

@@ -21,6 +21,8 @@ public class User extends UserItem {
 	private ZonedDateTime createdDate;
 	private RoleType role;
 	
+	public User(){}
+	
 	public String getEmail() {
 		return email;
 	}

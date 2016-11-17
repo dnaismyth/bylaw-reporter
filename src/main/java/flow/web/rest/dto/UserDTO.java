@@ -1,13 +1,14 @@
 package flow.web.rest.dto;
 
 import flow.config.Constants;
-
 import flow.domain.Authority;
 import flow.domain.RUser;
+import flow.dto.RoleType;
 
 import org.hibernate.validator.constraints.Email;
 
 import javax.validation.constraints.*;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 /**
@@ -35,7 +36,7 @@ public class UserDTO {
     @Size(min = 2, max = 5)
     private String langKey;
 
-    private Set<String> authorities;
+    private RoleType role;
 
     public UserDTO() {
     }
@@ -43,12 +44,11 @@ public class UserDTO {
     public UserDTO(RUser user) {
         this(user.getLogin(), user.getFirstName(), user.getLastName(),
             user.getEmail(), user.getActivated(), user.getLangKey(),
-            user.getAuthorities().stream().map(Authority::getName)
-                .collect(Collectors.toSet()));
+            user.getRole());
     }
 
     public UserDTO(String login, String firstName, String lastName,
-        String email, boolean activated, String langKey, Set<String> authorities) {
+        String email, boolean activated, String langKey, RoleType role) {
 
         this.login = login;
         this.firstName = firstName;
@@ -56,7 +56,7 @@ public class UserDTO {
         this.email = email;
         this.activated = activated;
         this.langKey = langKey;
-        this.authorities = authorities;
+        this.role = role;
     }
 
     public String getLogin() {
@@ -83,8 +83,8 @@ public class UserDTO {
         return langKey;
     }
 
-    public Set<String> getAuthorities() {
-        return authorities;
+    public RoleType getRole(){
+    	return role;
     }
 
     @Override
@@ -96,7 +96,7 @@ public class UserDTO {
             ", email='" + email + '\'' +
             ", activated=" + activated +
             ", langKey='" + langKey + '\'' +
-            ", authorities=" + authorities +
+            ", roleType=" + role +
             "}";
     }
 }
