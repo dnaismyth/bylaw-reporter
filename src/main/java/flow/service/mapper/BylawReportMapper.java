@@ -1,5 +1,8 @@
 package flow.service.mapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import flow.domain.RBylawReport;
 import flow.domain.RMedia;
 import flow.domain.ReporterInformation;
@@ -68,6 +71,22 @@ public class BylawReportMapper {
 		}
 		
 		return report;
+	}
+	
+	/**
+	 * Return list of BylawReport
+	 * @param reportList
+	 * @return
+	 */
+	public List<BylawReport> toBylawReportList(List<RBylawReport> reportList){
+		List<BylawReport> reports = null;
+		if(reportList != null){
+			reports = new ArrayList<BylawReport>();
+			for(RBylawReport rb : reportList){
+				reports.add(toBylawReport(rb));
+			}
+		}
+		return reports;
 	}
 	
 	/**

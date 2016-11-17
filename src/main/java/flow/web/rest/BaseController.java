@@ -4,7 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import flow.dto.RoleType;
 import flow.dto.User;
+import flow.exception.NoPermissionException;
 import flow.service.MailService;
 import flow.service.ReportService;
 import flow.service.UserService;
@@ -19,6 +21,9 @@ public class BaseController {
 	
 	@Autowired 
 	protected MailService mailService;
+	
+	protected static final String PARAM_PAGE = "page";
+	protected static final String PARAM_SIZE = "size";
 	
 	/**
 	 * Return the current logged in user
@@ -37,5 +42,11 @@ public class BaseController {
                 request.getServerPort() +              // "80"
                 request.getContextPath();              // "/myContextPath" or "" if deployed in root context
 		   return baseUrl;
+	}
+	
+	protected void checkUserAuthority(User user) throws NoPermissionException{
+		if(user.getRole() != RoleType.ADMIN){
+			throw new NoPermissionException("Only an admin can view this content");
+		}
 	}
 }

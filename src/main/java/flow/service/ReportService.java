@@ -1,6 +1,11 @@
 package flow.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import flow.domain.RBylawReport;
@@ -49,5 +54,16 @@ public class ReportService {
 		
 		RBylawReport found = reportRepo.findOne(id);
 		return reportMapper.toBylawReport(found);
+	}
+	
+	/**
+	 * Return all reports (for admin use)
+	 * @param pageable
+	 * @return
+	 */
+	public Page<BylawReport> getAllReports(Pageable pageable){
+		RestPreconditions.checkNotNull(pageable);
+		List<RBylawReport> allReports = reportRepo.findAll();
+		return new PageImpl<BylawReport>(reportMapper.toBylawReportList(allReports), pageable, allReports.size());
 	}
 }

@@ -2,6 +2,9 @@ package flow.web.rest;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import flow.dto.BylawReport;
 import flow.dto.User;
 import flow.exception.NoPermissionException;
+import flow.web.rest.dto.ResponseList;
 import flow.web.rest.dto.RestResponse;
 
 
@@ -38,5 +42,23 @@ public class ReportController extends BaseController{
 		String name = report.getReporterName();
 		mailService.sendReportReceivedEmail(email, name, baseUrl);
 		return new RestResponse<BylawReport>(created);
+	}
+	
+	/**
+	 * Return all reports if the current user is admin
+	 * @param size
+	 * @param page
+	 * @return
+	 * @throws NoPermissionException
+	 */
+	@RequestMapping(method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseList<BylawReport> getAllBylawReports(@Param(PARAM_SIZE) int size, 
+			@Param(PARAM_PAGE) int page) throws NoPermissionException{
+		User user = getCurrentUser();
+		checkUserAuthority(user);
+		Page<BylawReport> allReports = reportService.getAllReports(new PageRequest(page, size));
+		return new ResponseList<BylawReport>(allReports);
+		
 	}
 }
