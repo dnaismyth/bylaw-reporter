@@ -1,7 +1,10 @@
 package flow.security;
 
+import flow.domain.Authority;
 import flow.domain.RUser;
+import flow.dto.RoleType;
 import flow.repository.UserRepository;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -36,11 +40,39 @@ public class UserDetailsService implements org.springframework.security.core.use
             if (!user.getActivated()) {
                 throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
             }
-           
+            
+            Collection<? extends GrantedAuthority> authorityList = mapGrantedAuthorities(user);
             return new org.springframework.security.core.userdetails.User(lowercaseLogin,
                 user.getPassword(),
-                null);
+                authorityList);
         }).orElseThrow(() -> new UsernameNotFoundException("User " + lowercaseLogin + " was not found in the " +
         "database"));
+    }
+    
+    /**
+     * Map RoleType to user authorities
+     * @param ruser
+     * @return
+     */
+    private Collection<? extends GrantedAuthority> mapGrantedAuthorities(RUser ruser){
+    	Set<SimpleGrantedAuthority> authorities = new HashSet<SimpleGrantedAuthority>();
+    	RoleType role = ruser.getRole();
+    	if(role == RoleType.ADMIN){
+    		SimpleGrantedAuthority admin = new SimpleGrantedAuthority(AuthoritiesConstants.ADMIN);
+    		authorities.add(admin);
+    	}
+    	
+    	if(role == RoleType.USER){
+    		SimpleGrantedAuthority user = new SimpleGrantedAuthority(AuthoritiesConstants.USER);
+    		authorities.add(user);
+    	}
+    	
+    	if(role == RoleType.GUEST){
+    		SimpleGrantedAuthority guest = new SimpleGrantedAuthority(AuthoritiesConstants.GUEST);
+    		authorities.add(guest);
+    	}
+    	
+    	return authorities;
+    	
     }
 }
