@@ -38,13 +38,8 @@ public class MediaService {
 	 * @return
 	 * @throws BadRequestException 
 	 */
-	public void deleteMedia(Long mediaId, User reporter) throws BadRequestException{
+	public void deleteMedia(Long mediaId) throws BadRequestException{
 		RestPreconditions.checkNotNull(mediaId);
-		RestPreconditions.checkNotNull(reporter);
-		if(reporter.getRole() != RoleType.ADMIN){
-			throw new BadRequestException("You must be an admin to remove media.");
-		}
-		
 		mediaRepo.delete(mediaId);
 	}
 }
