@@ -44,21 +44,4 @@ public class ReportController extends BaseController{
 		return new RestResponse<BylawReport>(created);
 	}
 	
-	/**
-	 * Return all reports if the current user is admin
-	 * @param size
-	 * @param page
-	 * @return
-	 * @throws NoPermissionException
-	 */
-	@RequestMapping(method = RequestMethod.GET)
-	@ResponseBody
-	public ResponseList<BylawReport> getAllBylawReports(@Param(PARAM_SIZE) int size, 
-			@Param(PARAM_PAGE) int page) throws NoPermissionException{
-		User user = getCurrentUser();
-		checkUserAuthority(user);
-		Page<BylawReport> allReports = reportService.getAllReports(new PageRequest(page, size));
-		return new ResponseList<BylawReport>(allReports);
-		
-	}
 }
