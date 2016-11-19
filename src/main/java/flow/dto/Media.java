@@ -10,7 +10,7 @@ import java.time.ZonedDateTime;
 public class Media {
 
 	private Long id;
-	private UserItem owner;
+	private User reporter;
 	private String fileName;
 	private ZonedDateTime createdDate;
 	
@@ -24,12 +24,12 @@ public class Media {
 		this.id = id;
 	}
 	
-	public UserItem getOwner(){
-		return owner;
+	public User getReporter(){
+		return reporter;
 	}
 	
-	public void setOwner(UserItem owner){
-		this.owner = owner;
+	public void setReporter(User reporter){
+		this.reporter = reporter;
 	}
 
 	public ZonedDateTime getCreatedDate() {

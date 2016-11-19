@@ -9,6 +9,8 @@ import flow.dto.Media;
  *
  */
 public class MediaMapper {
+	
+	private UserMapper userMapper = new UserMapper();
 
 	/**
 	 * To Media DTO
@@ -21,7 +23,7 @@ public class MediaMapper {
 			m = new Media();
 			m.setFileName(rm.getFileName());
 			m.setId(rm.getId());
-			// todo: set owner once user mapper is created
+			m.setReporter(userMapper.toUser(rm.getReporter()));
 			m.setCreatedDate(rm.getCreatedDate());
 		}
 		
@@ -39,7 +41,7 @@ public class MediaMapper {
 			rm = new RMedia();
 			rm.setFileName(m.getFileName());
 			rm.setId(m.getId());
-			//TODO: set owner once user mapper is created
+			rm.setReporter(userMapper.toRUser(m.getReporter()));
 			rm.setCreatedDate(m.getCreatedDate());
 		}
 		

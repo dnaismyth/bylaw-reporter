@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import flow.domain.RBylawReport;
 import flow.dto.BylawReport;
+import flow.dto.Media;
 import flow.dto.RoleType;
 import flow.dto.User;
 import flow.exception.BadRequestException;
@@ -24,10 +25,13 @@ public class ReportService {
 	@Autowired
 	private BylawReportRepository reportRepo;
 	
+	@Autowired
+	private MediaService mediaService;
+	
 	private BylawReportMapper reportMapper = new BylawReportMapper();
 	
 	/**
-	 * Allow a new report to be created
+	 * Allow a new report to be created without media
 	 * @param report
 	 * @return
 	 */
@@ -65,5 +69,21 @@ public class ReportService {
 		RestPreconditions.checkNotNull(pageable);
 		List<RBylawReport> allReports = reportRepo.findAll();
 		return new PageImpl<BylawReport>(reportMapper.toBylawReportList(allReports), pageable, allReports.size());
+	}
+	
+	/**
+	 * Create bylaw report with media attachment
+	 * @param report
+	 * @param media
+	 * @return
+	 */
+	public BylawReport createBylawReportWithMedia(BylawReport report, Media media){
+		RestPreconditions.checkNotNull(report);
+		RestPreconditions.checkNotNull(media);
+		
+		Media reportMedia = mediaService.createMedia(media);
+		report.getReportMedia().add(reportMedia);
+		
+		return createBylawReport(report);
 	}
 }
