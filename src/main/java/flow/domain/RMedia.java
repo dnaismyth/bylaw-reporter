@@ -1,6 +1,7 @@
 package flow.domain;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -32,12 +33,6 @@ public class RMedia extends AbstractAuditingEntity {
 	 */
 	@Column(name = "filename", nullable = false)
 	private String fileName;
-	
-	/**
-	 * Id of the user that is making the report
-	 */
-	@Column(name = "reporter")
-	private RUser reporter;
 
 	public String getFileName() {
 		return fileName;
@@ -45,14 +40,6 @@ public class RMedia extends AbstractAuditingEntity {
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
-	}
-
-	public RUser getReporter() {
-		return reporter;
-	}
-
-	public void setReporter(RUser reporter) {
-		this.reporter = reporter;
 	}
 	
 	public Long getId(){

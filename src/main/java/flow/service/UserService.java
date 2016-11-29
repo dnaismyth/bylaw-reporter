@@ -106,7 +106,7 @@ public class UserService {
         // new user gets registration key
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         authorities.add(authority);
-        newUser.setRole(RoleType.USER);
+        newUser.setRole(RoleType.ADMIN);
         userRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
         return newUser;

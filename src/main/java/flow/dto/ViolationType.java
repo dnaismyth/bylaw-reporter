@@ -8,5 +8,6 @@ package flow.dto;
  */
 public enum ViolationType {
 	TRAFFIC,
-	PROPERTY
+	PROPERTY,
+	OTHER
 }

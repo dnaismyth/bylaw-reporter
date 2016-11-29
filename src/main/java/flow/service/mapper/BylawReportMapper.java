@@ -5,7 +5,7 @@ import java.util.List;
 
 import flow.domain.RBylawReport;
 import flow.domain.RMedia;
-import flow.domain.ReporterInformation;
+import flow.domain.RReporter;
 import flow.dto.BylawReport;
 import flow.dto.Media;
 
@@ -65,7 +65,7 @@ public class BylawReportMapper {
 					report.getMedia().add(mediaMapper.toRMedia(m));
 				}
 			}
-			ReporterInformation ri = buildReporterInformation(br);
+			RReporter ri = buildReporterInformation(br);
 			report.setReporterInformation(ri);
 			report.setDescription(br.getDescription());
 		}
@@ -94,7 +94,7 @@ public class BylawReportMapper {
 	 * @param report
 	 * @param ri
 	 */
-	private void setReporterInformation(BylawReport report, ReporterInformation ri){
+	private void setReporterInformation(BylawReport report, RReporter ri){
 		report.setReporterName(ri.getName());
 		report.setReporterAddress(ri.getAddress());
 		report.setReporterEmailAddress(ri.getEmailAddress());
@@ -106,10 +106,10 @@ public class BylawReportMapper {
 	 * @param br
 	 * @return
 	 */
-	private ReporterInformation buildReporterInformation(BylawReport br){
-		ReporterInformation ri = null;
+	private RReporter buildReporterInformation(BylawReport br){
+		RReporter ri = null;
 		if(br != null){
-			ri = new ReporterInformation();
+			ri = new RReporter();
 			ri.setAddress(br.getReporterAddress());
 			ri.setEmailAddress(br.getReporterEmailAddress());
 			ri.setName(br.getReporterName());

@@ -77,4 +77,5 @@ public abstract class AbstractAuditingEntity implements Serializable {
     public void setLastModifiedDate(ZonedDateTime lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
+    
 }

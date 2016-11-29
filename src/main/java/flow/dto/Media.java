@@ -10,7 +10,7 @@ import java.time.ZonedDateTime;
 public class Media {
 
 	private Long id;
-	private User reporter;
+	private Reporter reporter;	//TODO: change this to a reporter object
 	private String fileName;
 	private ZonedDateTime createdDate;
 	
@@ -24,11 +24,11 @@ public class Media {
 		this.id = id;
 	}
 	
-	public User getReporter(){
+	public Reporter getReporter(){
 		return reporter;
 	}
 	
-	public void setReporter(User reporter){
+	public void setReporter(Reporter reporter){
 		this.reporter = reporter;
 	}
 

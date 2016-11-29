@@ -23,7 +23,6 @@ public class MediaMapper {
 			m = new Media();
 			m.setFileName(rm.getFileName());
 			m.setId(rm.getId());
-			m.setReporter(userMapper.toUser(rm.getReporter()));
 			m.setCreatedDate(rm.getCreatedDate());
 		}
 		
@@ -41,7 +40,6 @@ public class MediaMapper {
 			rm = new RMedia();
 			rm.setFileName(m.getFileName());
 			rm.setId(m.getId());
-			rm.setReporter(userMapper.toRUser(m.getReporter()));
 			rm.setCreatedDate(m.getCreatedDate());
 		}
 		

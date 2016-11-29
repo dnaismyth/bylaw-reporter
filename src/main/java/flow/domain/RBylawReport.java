@@ -67,7 +67,7 @@ public class RBylawReport extends AbstractAuditingEntity {
 	 * Basic user information of the REPORTER
 	 */
 	@Embedded
-	private ReporterInformation reporterInformation;
+	private RReporter reporterInformation;
 
 	public ZonedDateTime getIncidentDate() {
 		return incidentDate;
@@ -93,11 +93,11 @@ public class RBylawReport extends AbstractAuditingEntity {
 		this.reportType = reportType;
 	}
 
-	public ReporterInformation getReporterInformation() {
+	public RReporter getReporterInformation() {
 		return reporterInformation;
 	}
 
-	public void setReporterInformation(ReporterInformation reporterInformation) {
+	public void setReporterInformation(RReporter reporterInformation) {
 		this.reporterInformation = reporterInformation;
 	}
 	
