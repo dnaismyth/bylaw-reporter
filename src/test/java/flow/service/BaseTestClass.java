@@ -1,5 +1,6 @@
 package flow.service;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,5 +14,7 @@ import flow.dto.ViolationType;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = BylawReportApp.class)
 public class BaseTestClass {
+	protected static final Logger logger = Logger.getLogger(BaseTestClass.class); 
+
 	
 }

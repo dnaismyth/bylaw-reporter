@@ -9,6 +9,7 @@ import flow.dto.User;
 import flow.exception.NoPermissionException;
 import flow.service.MailService;
 import flow.service.ReportService;
+import flow.service.S3TokenService;
 import flow.service.UserService;
 
 public class BaseController {
@@ -18,6 +19,9 @@ public class BaseController {
 	
 	@Autowired
 	protected ReportService reportService;
+	
+	@Autowired
+	protected S3TokenService s3TokenService;
 	
 	@Autowired 
 	protected MailService mailService;
