@@ -29,18 +29,40 @@ public class RMedia extends AbstractAuditingEntity {
 	private Long id;
 	
 	/**
-	 * Name of the media file
+	 * Retina s3 key
 	 */
-	@Column(name = "filename", nullable = false)
-	private String fileName;
+	@Column(name = "portrait_key", nullable = false)
+	private String portraitKey;
+	
+	/**
+	 * Thumbnail s3 key
+	 */
+	@Column(name="thumbnail_key", nullable = false)
+	private String thumbnailKey;
 
-	public String getFileName() {
-		return fileName;
-	}
-
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+	/**
+	 * Thumbnail height
+	 */
+	@Column (name="t_height", nullable = false)
+	private int tHeight;
+	
+	/**
+	 * Thumbnail width
+	 */
+	@Column (name="t_width", nullable = false)
+	private int tWidth;
+	
+	/**
+	 * Retina height
+	 */
+	@Column(name="p_height", nullable = false)
+	private int pHeight;
+	
+	/**
+	 * Retina Width
+	 */
+	@Column(name = "p_width", nullable = false)
+	private int pWidth;
 	
 	public Long getId(){
 		return id;
@@ -49,6 +71,53 @@ public class RMedia extends AbstractAuditingEntity {
 	public void setId(Long id){
 		this.id = id;
 	}
-	
+
+	public String getPortraitKey() {
+		return portraitKey;
+	}
+
+	public void setPortraitKey(String portraitKey) {
+		this.portraitKey = portraitKey;
+	}
+
+	public String getThumbnailKey() {
+		return thumbnailKey;
+	}
+
+	public void setThumbnailKey(String thumbnailKey) {
+		this.thumbnailKey = thumbnailKey;
+	}
+
+	public int getThumbnailHeight() {
+		return tHeight;
+	}
+
+	public void setThumbnailHeight(int tHeight) {
+		this.tHeight = tHeight;
+	}
+
+	public int getThumbnailWidth() {
+		return tWidth;
+	}
+
+	public void setThumbnailWidth(int tWidth) {
+		this.tWidth = tWidth;
+	}
+
+	public int getPortraitHeight() {
+		return pHeight;
+	}
+
+	public void setPortraitHeight(int pHeight) {
+		this.pHeight = pHeight;
+	}
+
+	public int getPortraitWidth() {
+		return pWidth;
+	}
+
+	public void setPortraitWidth(int pWidth) {
+		this.pWidth = pWidth;
+	}
 	
 }

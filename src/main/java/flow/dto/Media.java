@@ -10,8 +10,9 @@ import java.time.ZonedDateTime;
 public class Media {
 
 	private Long id;
-	private Reporter reporter;	//TODO: change this to a reporter object
-	private String fileName;
+	private Reporter reporter;
+	private MediaInfo portrait;
+	private MediaInfo thumbnail;
 	private ZonedDateTime createdDate;
 	
 	public Media () {}
@@ -39,13 +40,21 @@ public class Media {
 	public void setCreatedDate(ZonedDateTime createdDate) {
 		this.createdDate = createdDate;
 	}
-	
-	public String getFileName(){
-		return fileName;
+
+	public MediaInfo getPortrait() {
+		return portrait;
 	}
-	
-	public void setFileName(String fileName){
-		this.fileName = fileName;
+
+	public void setPortrait(MediaInfo portrait) {
+		this.portrait = portrait;
+	}
+
+	public MediaInfo getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(MediaInfo thumbnail) {
+		this.thumbnail = thumbnail;
 	}
 	
 }
