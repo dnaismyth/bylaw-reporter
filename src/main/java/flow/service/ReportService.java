@@ -31,18 +31,6 @@ public class ReportService {
 	private BylawReportMapper reportMapper = new BylawReportMapper();
 	
 	/**
-	 * Allow a new report to be created without media
-	 * @param report
-	 * @return
-	 */
-	public BylawReport createBylawReport(BylawReport report){
-		RestPreconditions.checkNotNull(report);
-		RBylawReport rb = reportMapper.toRBylawReport(report);
-		RBylawReport saved = reportRepo.save(rb);
-		return reportMapper.toBylawReport(saved);
-	}
-	
-	/**
 	 * Return a Bylaw report if the user is admin
 	 * @param id
 	 * @param user
@@ -77,13 +65,22 @@ public class ReportService {
 	 * @param media
 	 * @return
 	 */
-	public BylawReport createBylawReportWithMedia(BylawReport report, Media media){
+	public BylawReport createBylawReport(BylawReport report, Media media){
 		RestPreconditions.checkNotNull(report);
-		RestPreconditions.checkNotNull(media);
 		
-		Media reportMedia = mediaService.createMedia(media);
-		report.getReportMedia().add(reportMedia);
+		if(media != null){
+			Media reportMedia = mediaService.createMedia(media);
+			report.setReportMedia(reportMedia);
+		}	
 		
-		return createBylawReport(report);
+		return createAndSaveBylawReport(report);
+	}
+	
+	
+	private BylawReport createAndSaveBylawReport(BylawReport report){
+		RestPreconditions.checkNotNull(report);
+		RBylawReport rb = reportMapper.toRBylawReport(report);
+		RBylawReport saved = reportRepo.save(rb);
+		return reportMapper.toBylawReport(saved);
 	}
 }

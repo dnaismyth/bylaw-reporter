@@ -59,9 +59,9 @@ public class RBylawReport extends AbstractAuditingEntity {
 	/**
 	 * Optional image attachments
 	 */
-	@OneToMany
-	@JoinTable(name = "report_media")
-	private Collection<RMedia> reportMedia = new ArrayList<RMedia>();
+	@OneToOne
+	@Column(name="media")
+	private RMedia reportMedia;
 	
 	/**
 	 * Basic user information of the REPORTER
@@ -101,11 +101,11 @@ public class RBylawReport extends AbstractAuditingEntity {
 		this.reporterInformation = reporterInformation;
 	}
 	
-	public Collection<RMedia> getMedia() {
+	public RMedia getMedia() {
 		return reportMedia;
 	}
 
-	public void setMedia(Collection<RMedia> reportMedia) {
+	public void setMedia(RMedia reportMedia) {
 		this.reportMedia = reportMedia;
 	}
 	

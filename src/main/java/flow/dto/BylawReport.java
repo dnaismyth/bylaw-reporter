@@ -24,7 +24,7 @@ public class BylawReport {
 	private ViolationType reportType;
 	
 	
-	private Collection<Media> reportMedia = new ArrayList<Media>();
+	private Media reportMedia;
 
 
 	public Long getId() {
@@ -117,12 +117,12 @@ public class BylawReport {
 	}
 
 
-	public Collection<Media> getReportMedia() {
+	public Media getReportMedia() {
 		return reportMedia;
 	}
 
 
-	public void setReportMedia(Collection<Media> reportMedia){
+	public void setReportMedia(Media reportMedia){
 		this.reportMedia = reportMedia;
 	}
 

@@ -31,11 +31,7 @@ public class BylawReportMapper {
 			report.setCreatedDate(rb.getCreatedDate());
 			report.setId(rb.getId());
 			report.setIncidentDate(rb.getIncidentDate());
-			if(rb.getMedia() != null && !rb.getMedia().isEmpty()){
-				for(RMedia rm : rb.getMedia()){
-					report.getReportMedia().add(mediaMapper.toMedia(rm));
-				}
-			}
+			report.setReportMedia(mediaMapper.toMedia(rb.getMedia()));
 			
 			if(rb.getReporterInformation() != null){
 				setReporterInformation(report, rb.getReporterInformation());
@@ -60,11 +56,7 @@ public class BylawReportMapper {
 			report.setCreatedDate(br.getCreatedDate());
 			report.setId(br.getId());
 			report.setIncidentDate(br.getIncidentDate());
-			if(br.getReportMedia() != null && !br.getReportMedia().isEmpty()){
-				for(Media m : br.getReportMedia()){
-					report.getMedia().add(mediaMapper.toRMedia(m));
-				}
-			}
+			report.setMedia(mediaMapper.toRMedia(br.getReportMedia()));
 			RReporter ri = buildReporterInformation(br);
 			report.setReporterInformation(ri);
 			report.setDescription(br.getDescription());

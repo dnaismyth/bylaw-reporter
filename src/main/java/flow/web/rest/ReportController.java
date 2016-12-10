@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import flow.dto.BylawReport;
+import flow.dto.Media;
 import flow.dto.User;
 import flow.exception.NoPermissionException;
 import flow.web.rest.dto.ResponseList;
@@ -37,7 +38,8 @@ public class ReportController extends BaseController{
 	@ResponseBody
 	public RestResponse<BylawReport> createBylawReport(@RequestBody BylawReport report, HttpServletRequest request){
 		String baseUrl = getBaseUrl(request);
-		BylawReport created = reportService.createBylawReport(report);
+		Media reportMedia = report.getReportMedia() != null ? report.getReportMedia() : null;
+		BylawReport created = reportService.createBylawReport(report, reportMedia);
 		String email = report.getReporterEmailAddress();
 		String name = report.getReporterName();
 		mailService.sendReportReceivedEmail(email, name, baseUrl);

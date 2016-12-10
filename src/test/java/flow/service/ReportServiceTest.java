@@ -24,7 +24,7 @@ public class ReportServiceTest extends BaseTestClass {
 		br.setReportType(ViolationType.PROPERTY);
 		br.setReporterName("Reporter");
 		br.setIncidentDate(ZonedDateTime.now());
-		BylawReport created = reportService.createBylawReport(br);
+		BylawReport created = reportService.createBylawReport(br, null);
 		Assert.assertNotNull(created);
 	}
 }

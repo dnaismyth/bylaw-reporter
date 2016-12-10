@@ -66,6 +66,12 @@ public class MediaMapper {
 		return rm;
 	}
 	
+	/**
+	 * Used to map MediaInfo objects for Media DTO
+	 * @param rm
+	 * @param type
+	 * @return
+	 */
 	private MediaInfo mapMediaInfo(RMedia rm, MediaType type){
 		MediaInfo mediaInfo = new MediaInfo();
 		if(type == MediaType.PORTRAIT){
