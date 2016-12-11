@@ -55,4 +55,15 @@ public class MediaInfo {
 		this.s3Key = s3Key;
 	}
 	
+	@Override
+	public String toString() {
+		return "BylawReport{" +
+	            "url='" + url + '\'' +
+	            ", s3Key='" + s3Key + '\'' +
+	            ", width='" + width + '\'' +
+	            ", height='" + height + '\'' +
+	            ", mediaType='" + mediaType + '\'' +
+	            '}';
+	}
+	
 }

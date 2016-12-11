@@ -125,6 +125,18 @@ public class BylawReport {
 	public void setReportMedia(Media reportMedia){
 		this.reportMedia = reportMedia;
 	}
+	
+	@Override
+    public String toString() {
+        return "BylawReport{" +
+            "id='" + id + '\'' +
+            ", createdDate='" + createdDate + '\'' +
+            ", reporterName='" + reporterName + '\'' +
+            ", reporterAddress='" + reporterAddress + '\'' +
+            ", reporterPhone='" + reporterPhone + '\'' +
+            ", reporterEmailAddress='" + reporterEmailAddress + '\'' +
+            '}';
+    }
 
 	
 }

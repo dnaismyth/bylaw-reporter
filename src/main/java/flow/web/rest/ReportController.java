@@ -16,6 +16,7 @@ import flow.dto.BylawReport;
 import flow.dto.Media;
 import flow.dto.User;
 import flow.exception.NoPermissionException;
+import flow.web.rest.dto.ReportAndMediaDTO;
 import flow.web.rest.dto.ResponseList;
 import flow.web.rest.dto.RestResponse;
 
@@ -36,12 +37,13 @@ public class ReportController extends BaseController{
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
-	public RestResponse<BylawReport> createBylawReport(@RequestBody BylawReport report, HttpServletRequest request){
+	public RestResponse<BylawReport> createBylawReport(@RequestBody final ReportAndMediaDTO reportMediaDTO, HttpServletRequest request){
 		String baseUrl = getBaseUrl(request);
-		Media reportMedia = report.getReportMedia() != null ? report.getReportMedia() : null;
-		BylawReport created = reportService.createBylawReport(report, reportMedia);
-		String email = report.getReporterEmailAddress();
-		String name = report.getReporterName();
+		Media reportMedia = reportMediaDTO.getReportMedia() != null ? reportMediaDTO.getReportMedia() : null;
+		BylawReport br = reportMediaDTO.getReport();
+		BylawReport created = reportService.createBylawReport(br, reportMedia);
+		String email = br.getReporterEmailAddress();
+		String name = br.getReporterName();
 		mailService.sendReportReceivedEmail(email, name, baseUrl);
 		return new RestResponse<BylawReport>(created);
 	}
