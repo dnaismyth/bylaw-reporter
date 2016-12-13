@@ -59,7 +59,6 @@ public class RBylawReport extends AbstractAuditingEntity {
 	/**
 	 * Optional image attachments
 	 */
-	@OneToOne
 	@Column(name="media")
 	private RMedia reportMedia;
 	
