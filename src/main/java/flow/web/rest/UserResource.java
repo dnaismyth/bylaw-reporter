@@ -1,9 +1,12 @@
 package flow.web.rest;
 
 import flow.config.Constants;
+
 import com.codahale.metrics.annotation.Timed;
+
 import flow.domain.Authority;
 import flow.domain.RUser;
+import flow.dto.User;
 import flow.repository.AuthorityRepository;
 import flow.repository.UserRepository;
 import flow.security.AuthoritiesConstants;
@@ -12,6 +15,7 @@ import flow.service.UserService;
 import flow.web.rest.dto.ManagedUserDTO;
 import flow.web.rest.util.HeaderUtil;
 import flow.web.rest.util.PaginationUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -25,9 +29,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+
 import java.net.URI;
 import java.net.URISyntaxException;
+
 import javax.servlet.http.HttpServletRequest;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -105,7 +112,7 @@ public class UserResource {
                 .headers(HeaderUtil.createFailureAlert("userManagement", "emailexists", "Email already in use"))
                 .body(null);
         } else {
-            RUser newUser = userService.createUser(managedUserDTO);
+            User newUser = userService.createUser(managedUserDTO);
             String baseUrl = request.getScheme() + // "http"
             "://" +                                // "://"
             request.getServerName() +              // "myhost"

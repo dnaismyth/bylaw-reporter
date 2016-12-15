@@ -3,6 +3,7 @@ package flow.web.rest.dto;
 import java.io.Serializable;
 
 import flow.dto.Operation;
+import flow.dto.User;
 
 /**
  * General Rest Response
@@ -20,10 +21,16 @@ public class RestResponse<T> implements Serializable{
 	private Operation op;
 	private Long id;
 	private FlowResponseCode code;
+	private String message;
 	
 	public RestResponse(Operation op, T data){
 		this.op = op;
 		this.data = data;
+	}
+	
+	public RestResponse(FlowResponseCode code, String message){
+		this.code = code;
+		this.message = message;
 	}
 	
 	public RestResponse(FlowResponseCode code, T data){
@@ -43,7 +50,7 @@ public class RestResponse<T> implements Serializable{
 	public RestResponse(FlowResponseCode code){
 		this.code = code;
 	}
-	
+
 	public Operation getOp() {
 		return op;
 	}
@@ -82,6 +89,14 @@ public class RestResponse<T> implements Serializable{
 	
 	public Long getId(){
 		return id;
+	}
+	
+	public String getMessage(){
+		return message;
+	}
+	
+	public void setMessage(String message){
+		this.message = message;
 	}
 
 }

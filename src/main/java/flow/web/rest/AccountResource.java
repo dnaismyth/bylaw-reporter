@@ -3,6 +3,7 @@ package flow.web.rest;
 import com.codahale.metrics.annotation.Timed;
 
 import flow.domain.RUser;
+import flow.dto.User;
 import flow.repository.UserRepository;
 import flow.security.SecurityUtils;
 import flow.service.MailService;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.*;
@@ -67,7 +69,7 @@ public class AccountResource {
             .orElseGet(() -> userRepository.findOneByEmail(managedUserDTO.getEmail())
                 .map(user -> new ResponseEntity<>("e-mail address already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
                 .orElseGet(() -> {
-                    RUser user = userService.createUserInformation(managedUserDTO.getLogin(), managedUserDTO.getPassword(),
+                    User user = userService.createUserInformation(managedUserDTO.getLogin(), managedUserDTO.getPassword(),
                     managedUserDTO.getFirstName(), managedUserDTO.getLastName(), managedUserDTO.getEmail().toLowerCase(),
                     managedUserDTO.getLangKey());
                     String baseUrl = request.getScheme() + // "http"

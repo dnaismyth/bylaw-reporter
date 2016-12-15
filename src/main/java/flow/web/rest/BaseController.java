@@ -48,9 +48,15 @@ public class BaseController {
 		   return baseUrl;
 	}
 	
-	protected void checkUserAuthority(User user) throws NoPermissionException{
+	protected void checkAdminAuthority(User user) throws NoPermissionException{
 		if(user.getRole() != RoleType.ADMIN){
 			throw new NoPermissionException("Only an admin can view this content");
+		}
+	}
+	
+	protected void checkGuestAuthority(User user) throws NoPermissionException{
+		if(user.getRole() != RoleType.ADMIN && user.getRole() != RoleType.GUEST){
+			throw new NoPermissionException("You must be a guest user to access resources.");
 		}
 	}
 }

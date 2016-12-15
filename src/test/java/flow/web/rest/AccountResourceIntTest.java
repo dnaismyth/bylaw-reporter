@@ -4,6 +4,7 @@ import flow.BylawReportApp;
 import flow.domain.Authority;
 import flow.domain.RUser;
 import flow.dto.RoleType;
+import flow.dto.User;
 import flow.repository.AuthorityRepository;
 import flow.repository.UserRepository;
 import flow.security.AuthoritiesConstants;
@@ -73,7 +74,7 @@ public class AccountResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        doNothing().when(mockMailService).sendActivationEmail((RUser) anyObject(), anyString());
+        doNothing().when(mockMailService).sendActivationEmail((User) anyObject(), anyString());
 
         AccountResource accountResource = new AccountResource();
         ReflectionTestUtils.setField(accountResource, "userRepository", userRepository);

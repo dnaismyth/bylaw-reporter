@@ -13,6 +13,7 @@ import flow.service.util.RandomUtil;
 import flow.service.util.RestPreconditions;
 import flow.web.rest.dto.ManagedUserDTO;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -35,6 +36,8 @@ public class UserService {
 	
     private final Logger log = LoggerFactory.getLogger(UserService.class);
     private UserMapper userMapper = new UserMapper();
+    
+    private static final String GUEST_LOGIN = "guest";
     
     @Inject
     private PasswordEncoder passwordEncoder;
@@ -87,11 +90,11 @@ public class UserService {
             });
     }
 
-    public RUser createUserInformation(String login, String password, String firstName, String lastName, String email,
+    public User createUserInformation(String login, String password, String firstName, String lastName, String email,
         String langKey) {
 
         RUser newUser = new RUser();
-        Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
+        Authority authority = authorityRepository.findOne(AuthoritiesConstants.ADMIN);
         Set<Authority> authorities = new HashSet<>();
         String encryptedPassword = passwordEncoder.encode(password);
         newUser.setLogin(login);
@@ -107,12 +110,24 @@ public class UserService {
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         authorities.add(authority);
         newUser.setRole(RoleType.ADMIN);
-        userRepository.save(newUser);
-        log.debug("Created Information for User: {}", newUser);
-        return newUser;
+        RUser saved = userRepository.save(newUser);
+        log.debug("Created Information for User: {}", saved);
+        return userMapper.toUser(saved);
+    }
+    
+    public User createDefaultGuestUser(){
+    	RUser guest = new RUser();
+    	String encrypedPassword = passwordEncoder.encode(RandomUtil.generatePassword()); // generate a random password for guest account
+    	String login = GUEST_LOGIN.concat("-" + RandomStringUtils.randomAlphanumeric(20).toUpperCase());
+    	guest.setLogin(login);
+    	guest.setPassword(encrypedPassword);
+    	guest.setActivated(true);
+    	guest.setRole(RoleType.GUEST);
+    	RUser saved = userRepository.save(guest);
+    	return userMapper.toUser(saved);
     }
 
-    public RUser createUser(ManagedUserDTO managedUserDTO) {
+    public User createUser(ManagedUserDTO managedUserDTO) {
         RUser user = new RUser();
         user.setLogin(managedUserDTO.getLogin());
         user.setFirstName(managedUserDTO.getFirstName());
@@ -129,9 +144,9 @@ public class UserService {
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(ZonedDateTime.now());
         user.setActivated(true);
-        userRepository.save(user);
-        log.debug("Created Information for User: {}", user);
-        return user;
+        RUser saved = userRepository.save(user);
+        log.debug("Created Information for User: {}", saved);
+        return userMapper.toUser(saved);
     }
 
     public void updateUserInformation(String firstName, String lastName, String email, String langKey) {

@@ -67,7 +67,7 @@ public class MailService {
     }
 
     @Async
-    public void sendActivationEmail(RUser user, String baseUrl) {
+    public void sendActivationEmail(User user, String baseUrl) {
         log.debug("Sending activation e-mail to '{}'", user.getEmail());
         Locale locale = Locale.ENGLISH;
         Context context = new Context(locale);
@@ -96,7 +96,7 @@ public class MailService {
     
 
     @Async
-    public void sendCreationEmail(RUser user, String baseUrl) {
+    public void sendCreationEmail(User user, String baseUrl) {
         log.debug("Sending creation e-mail to '{}'", user.getEmail());
         Locale locale = Locale.ENGLISH;
         Context context = new Context(locale);
