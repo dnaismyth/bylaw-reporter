@@ -46,7 +46,7 @@ public class AdminReportController extends BaseController {
 	public ResponseList<BylawReport> getAllBylawReports(@Param(PARAM_SIZE) int size, 
 			@Param(PARAM_PAGE) int page) throws NoPermissionException{
 		User user = getCurrentUser();
-		checkUserAuthority(user);
+		checkAdminAuthority(user);
 		Page<BylawReport> allReports = reportService.getAllReports(new PageRequest(page, size));
 		return new ResponseList<BylawReport>(allReports);
 		

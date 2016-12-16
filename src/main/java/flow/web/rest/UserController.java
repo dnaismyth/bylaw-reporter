@@ -36,13 +36,10 @@ public class UserController extends BaseController {
 	 * Create a default guest user for bylaw reporters
 	 * @return
 	 */
-	@RequestMapping(value = "/guest", method = RequestMethod.GET)
+	@RequestMapping(value = "/activate_guest", method = RequestMethod.GET)
 	@ResponseBody
 	public RestResponse<User> createDefaultGuestUser(){
 		User guest = userService.createDefaultGuestUser();
-		if(guest.getRole() == RoleType.GUEST)
-			return new RestResponse<User>(FlowResponseCode.OK, guest);
-		else
-			return new RestResponse<User>(FlowResponseCode.ERROR, "Error fetching guest user.");
+		return new RestResponse<User>(FlowResponseCode.OK, guest);
 	}
 }
