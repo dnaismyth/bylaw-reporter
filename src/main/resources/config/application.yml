@@ -41,6 +41,7 @@ spring:
         mode: XHTML
 
 security:
+    filter-order: 5
     basic:
         enabled: false
 
