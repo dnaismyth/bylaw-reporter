@@ -19,6 +19,7 @@ public class UserMapper {
 		User user = null;
 		if(ru != null){
 			user = new User();
+			user.setRole(ru.getRole());
 			user.setCreatedDate(ru.getCreatedDate());
 			user.setEmail(ru.getEmail());
 			user.setFirstName(ru.getFirstName());
@@ -40,6 +41,7 @@ public class UserMapper {
 		RUser ru = null;
 		if (u != null){
 			ru = new RUser();
+			ru.setRole(u.getRole());
 			ru.setCreatedDate(u.getCreatedDate());
 			ru.setEmail(u.getEmail());
 			ru.setFirstName(u.getFirstName());

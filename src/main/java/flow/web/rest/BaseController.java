@@ -59,4 +59,17 @@ public class BaseController {
 			throw new NoPermissionException("You must be a guest user to access resources.");
 		}
 	}
+	
+	/**
+	 * Check if a user is valid by their id and role type
+	 * @param userId
+	 * @return
+	 */
+	protected boolean userIsValid(Long userId){
+		User user = userService.findUserById(userId);
+		if(user.getRole().equals(RoleType.ADMIN) || user.getRole().equals(RoleType.GUEST)){
+			return true;
+		}
+		return false;
+	}
 }

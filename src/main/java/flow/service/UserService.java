@@ -212,4 +212,15 @@ public class UserService {
     	return userMapper.toUser(ru);
     }
     
+    /**
+     * Find user by their id
+     * @param userId
+     * @return
+     */
+    public User findUserById(Long userId){
+    	RestPreconditions.checkNotNull(userId);
+    	RUser ru = userRepository.findOne(userId);
+    	return userMapper.toUser(ru);
+    }
+    
 }
