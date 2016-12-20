@@ -2,6 +2,8 @@ package flow.dto;
 
 import java.time.ZonedDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * User DTO
  * @author DN
@@ -20,6 +22,8 @@ public class User extends UserItem {
 	private String lastName;
 	private ZonedDateTime createdDate;
 	private RoleType role;
+	@JsonIgnore
+    private String activationKey;
 	
 	public User(){}
 	
@@ -58,6 +62,14 @@ public class User extends UserItem {
 	}
 	public void setRole(RoleType role){
 		this.role = role;
+	}
+
+	public void setActivationKey(String activationKey) {
+		this.activationKey = activationKey;
+	}
+
+	public String getActivationKey() {
+		return activationKey;
 	}
 	
 }
