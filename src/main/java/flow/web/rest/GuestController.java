@@ -42,12 +42,11 @@ public class GuestController extends BaseController {
 	 * @return 
 	 * @throws NoPermissionException 
 	 */
-	@RequestMapping(value = "/{guestId}/s3token", method = RequestMethod.GET)
+	@RequestMapping(value = "/s3token", method = RequestMethod.GET)
 	@ResponseBody
-	public S3TokenResponse getS3AccessToken(@PathVariable Long guestId) throws NoPermissionException{
-		if(!userIsValid(guestId)){
-			throw new NoPermissionException("You must be a guest or admin to access this resource.");
-		}
+	public S3TokenResponse getS3AccessToken() throws NoPermissionException{
+		User user = getCurrentUser();
+		checkGuestAuthority(user);
 		BasicSessionCredentials credentials = s3TokenService.getS3UserCredentials();
 		return new S3TokenResponse(credentials);
 	}

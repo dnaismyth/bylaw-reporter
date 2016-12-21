@@ -85,7 +85,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/profile-info").permitAll()
             .antMatchers("/api/guests/activate").permitAll()
             .antMatchers("/api/**").authenticated()
-            .antMatchers("/api/guests/s3token").hasAuthority(AuthoritiesConstants.USER)
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/v2/api-docs/**").permitAll()
