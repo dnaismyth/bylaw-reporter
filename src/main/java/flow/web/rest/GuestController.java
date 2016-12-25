@@ -25,6 +25,7 @@ import flow.dto.User;
 import flow.exception.NoPermissionException;
 import flow.security.jwt.JWTConfigurer;
 import flow.security.jwt.TokenProvider;
+import flow.service.util.S3Utils;
 import flow.web.rest.dto.S3TokenResponse;
 
 @RestController
@@ -37,6 +38,8 @@ public class GuestController extends BaseController {
 	@Inject
     private TokenProvider tokenProvider;
 	
+	private static final String GUEST_LOGIN = "guest_login";
+	
 	/**
 	 * Allow user access to S3 Bucket
 	 * @return 
@@ -48,7 +51,7 @@ public class GuestController extends BaseController {
 		User user = getCurrentUser();
 		checkGuestAuthority(user);
 		BasicSessionCredentials credentials = s3TokenService.getS3UserCredentials();
-		return new S3TokenResponse(credentials);
+		return new S3TokenResponse(credentials, S3Utils.S3_BUCKET);
 	}
 	
 	/**
@@ -61,7 +64,6 @@ public class GuestController extends BaseController {
 		req.getHeaderNames();
 		User guest = userService.createDefaultGuestUser();
 		return authenticateGuestAndInitializeSessionByUsername(guest.getLogin(), userDetailsService, req, response);
-		//return new RestResponse<User>(FlowResponseCode.OK, guest);
 	}
 	
 	private ResponseEntity<?> authenticateGuestAndInitializeSessionByUsername(
