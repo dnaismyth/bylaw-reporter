@@ -57,17 +57,17 @@ public class Media {
 		this.thumbnail = thumbnail;
 	}
 
-	@Override
-	public String toString() {
-		return "BylawReport{" +
-	            "id='" + id + '\'' +
-	            ", createdDate='" + createdDate + '\'' +
-	            ", reporterName='" + reporter.getName() + '\'' +
-	            ", thumbnail='" + thumbnail.toString() + '\'' +
-	            ", portrait='" + portrait.toString() + '\'' +
-	            ", createdDate='" + createdDate + '\'' +
-	            '}';
-	}
+//	@Override
+//	public String toString() {
+//		return "BylawReport{" +
+//	            "id='" + id + '\'' +
+//	            ", createdDate='" + createdDate + '\'' +
+//	            ", reporterName='" + reporter.getName() + '\'' +
+//	            ", thumbnail='" + thumbnail.toString() + '\'' +
+//	            ", portrait='" + portrait.toString() + '\'' +
+//	            ", createdDate='" + createdDate + '\'' +
+//	            '}';
+//	}
 	
 	
 	

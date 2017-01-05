@@ -12,6 +12,8 @@ public class ReportAndMediaDTO {
 	
 	private Media reportMedia;
 	
+	public ReportAndMediaDTO(){}
+	
 	public ReportAndMediaDTO(BylawReport report, Media reportMedia){
 		this.report = report;
 		this.reportMedia = reportMedia;
@@ -33,11 +35,11 @@ public class ReportAndMediaDTO {
 		this.reportMedia = reportMedia;
 	}
 	
-	@Override
-    public String toString() {
-        return "LoginDTO{" +
-            "[Bylaw Report]='" + report.toString() + '\'' +
-            ", [Bylaw Media]='" + reportMedia.toString() + '\'' +
-            '}';
-    }
+//	@Override
+//    public String toString() {
+//        return "LoginDTO{" +
+//            "[Bylaw Report]='" + report.toString() + '\'' +
+//            ", [Bylaw Media]='" + reportMedia.toString() + '\'' +
+//            '}';
+//    }
 }
