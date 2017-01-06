@@ -5,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     </head>
     <body>
-        <p th:text="#{email.received.greeting(${user.login})}">
+        <p th:text="#{email.received.greeting(${user})}">
             Dear
         </p>
         <p th:text="#{email.received.text1}">
@@ -16,4 +16,4 @@
             <em th:text="#{email.signature}"></em>
         </p>
     </body>
-</
+</html>

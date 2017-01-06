@@ -90,8 +90,9 @@ public class MailService {
     	Context context = new Context(locale);
     	context.setVariable(USER, reporterName);
     	context.setVariable(BASE_URL, baseUrl);
-    	
-   
+    	String content = templateEngine.process("reportReceived", context);
+    	String subject = messageSource.getMessage("email.received.title", null, locale);
+    	sendEmail(emailAddress, subject, content, false, true);   
     }
     
 
