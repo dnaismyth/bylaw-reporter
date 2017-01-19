@@ -19,7 +19,6 @@ public class RestResponse<T> implements Serializable{
 	private static final long serialVersionUID = 4558461599630366305L;
 	private T data;
 	private Operation op;
-	private Long id;
 	private FlowResponseCode code;
 	private String message;
 	
@@ -36,11 +35,6 @@ public class RestResponse<T> implements Serializable{
 	public RestResponse(FlowResponseCode code, T data){
 		this.code = code;
 		this.data = data;
-	}
-	
-	public RestResponse(Operation op, Long id){
-		this.id = id;
-		this.op = op;
 	}
 	
 	public RestResponse(T data){
@@ -83,13 +77,6 @@ public class RestResponse<T> implements Serializable{
 		this.data = data;
 	}
 	
-	public void setId(Long id){
-		this.id = id;
-	}
-	
-	public Long getId(){
-		return id;
-	}
 	
 	public String getMessage(){
 		return message;

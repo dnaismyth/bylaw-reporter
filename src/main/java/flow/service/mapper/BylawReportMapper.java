@@ -1,7 +1,11 @@
 package flow.service.mapper;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import flow.domain.RBylawReport;
 import flow.domain.RMedia;
@@ -60,6 +64,7 @@ public class BylawReportMapper {
 			RReporter ri = buildReporterInformation(br);
 			report.setReporterInformation(ri);
 			report.setDescription(br.getDescription());
+			report.setReportType(br.getReportType());
 		}
 		
 		return report;
@@ -108,5 +113,20 @@ public class BylawReportMapper {
 			ri.setPhone(br.getReporterPhone());
 		}
 		return ri;
+	}
+	
+	/**
+	 * maps a Page of entity reports -> DTO Report
+	 * @param reports
+	 * @return
+	 */
+	public Page<BylawReport> toBylawReportPage(Page<RBylawReport> reports){
+		List<BylawReport> bylawReports = new ArrayList<BylawReport>();
+		Iterator<RBylawReport> iterator = reports.iterator();
+		while(iterator.hasNext()){
+			bylawReports.add(toBylawReport(iterator.next()));
+		}
+		
+		return new PageImpl<BylawReport>(bylawReports);
 	}
 }

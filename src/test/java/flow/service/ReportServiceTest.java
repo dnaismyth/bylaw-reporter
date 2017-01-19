@@ -11,8 +11,6 @@ import flow.dto.ViolationType;
 
 public class ReportServiceTest extends BaseTestClass {
 
-	@Autowired
-	private ReportService reportService;
 
 	@Test
 	public void testCreateReport(){

@@ -13,6 +13,7 @@ import flow.dto.BylawReport;
 import flow.dto.Media;
 import flow.dto.RoleType;
 import flow.dto.User;
+import flow.dto.ViolationType;
 import flow.exception.BadRequestException;
 import flow.exception.NoPermissionException;
 import flow.repository.BylawReportRepository;
@@ -55,8 +56,8 @@ public class ReportService {
 	 */
 	public Page<BylawReport> getAllReports(Pageable pageable){
 		RestPreconditions.checkNotNull(pageable);
-		List<RBylawReport> allReports = reportRepo.findAll();
-		return new PageImpl<BylawReport>(reportMapper.toBylawReportList(allReports), pageable, allReports.size());
+		Page<RBylawReport> allReports = reportRepo.findAll(pageable);
+		return reportMapper.toBylawReportPage(allReports);
 	}
 	
 	/**
@@ -82,5 +83,26 @@ public class ReportService {
 		RBylawReport rb = reportMapper.toRBylawReport(report);
 		RBylawReport saved = reportRepo.save(rb);
 		return reportMapper.toBylawReport(saved);
+	}
+	
+	/**
+	 * Find BylawReports by violation type
+	 * @param type
+	 * @param pageable
+	 * @return
+	 */
+	public Page<BylawReport> findReportsByViolationType(ViolationType type, Pageable pageable){
+		RestPreconditions.checkNotNull(type);
+		Page<RBylawReport> reports = reportRepo.findReportsByViolationType(type, pageable);
+		return reportMapper.toBylawReportPage(reports);
+	}
+	
+	/**
+	 * Allow for an admin to delete a report
+	 * @param reportId
+	 */
+	public void removeReport(Long reportId){
+		RestPreconditions.checkNotNull(reportId);
+		reportRepo.delete(reportId);
 	}
 }
